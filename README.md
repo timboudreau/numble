@@ -15,7 +15,7 @@ and type-safe access to it.  It's common to deal in untyped data that consists
 of hashes of strings;  this library automatically generates a typesafe class for
 that data.
 
-The idea is to integrate it this project into frameworks - so if you are, say,
+The idea is to integrate this project into frameworks - so if you are, say,
 supplying a constructor argument of a generated type, the framework validates
 the data (and does the Right Thing&trade; if the data is invalid) and then
 hands your code a beautiful, valid, typesafe object that represents the parameters
