@@ -11,7 +11,15 @@ into logic that does other things, which becomes hard to maintain.
 
 This library lets you specify, declaratively, what your input looks like, and it
 will generate a correctly implemented class to provide validation, marshalling
-and type-safe access to it.
+and type-safe access to it.  It's common to deal in untyped data that consists
+of hashes of strings;  this library automatically generates a typesafe class for
+that data.
+
+The idea is to integrate it this project into frameworks - so if you are, say,
+supplying a constructor argument of a generated type, the framework validates
+the data (and does the Right Thing&trade; if the data is invalid) and then
+hands your code a beautiful, valid, typesafe object that represents the parameters
+you expect.
 
 So, you annotate a class like so:
 
@@ -69,6 +77,7 @@ if they need to take some additional objects in their constructor, that is fine
 It is preferable to perform validation *before* instantiating an object, so it
 is simply impossible for an object with invalid to exist.  However, generated objects
 can be generated with a `validate()` method that will run validation post-hoc.
+The `ParamChecker` class can be used to pre-validate data.
 
 Usage
 -----
@@ -118,6 +127,9 @@ write.
 
 Generated Class Example
 -----------------------
+
+This is what is generated from the annotations above:
+
 ```java
 @Origin(com.mastfrog.parameters.FakePage.class)
 public final class FakePageParams implements Serializable, Validatable {
