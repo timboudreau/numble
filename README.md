@@ -1,5 +1,5 @@
-Parameters
-==========
+Numble
+======
 
 This is a small framework-agnostic library that allows you to generate entity classes from an
 annotation, generate instances from data, and validate the input data they're
