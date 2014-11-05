@@ -23,7 +23,7 @@
  */
 package com.mastfrog.parameters;
 
-import com.mastfrog.util.Checks;
+import com.google.common.base.Preconditions;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -44,13 +44,13 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
         private final Map<String, String> map;
 
         public MapAdapter(Map<String, String> map) {
-            Checks.notNull("map", map);
+            Preconditions.checkNotNull(map);
             this.map = map;
         }
 
         @Override
         public String get(String key) {
-            Checks.notNull("key", key);
+            Preconditions.checkNotNull(key);
             return map.get(key);
         }
 
@@ -64,6 +64,7 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
             return map.entrySet().iterator();
         }
 
+        @Override
         public String toString() {
             return map.toString();
         }

@@ -192,7 +192,6 @@ public final class Processor extends AbstractProcessor {
                 }
             }
         }
-        System.out.println("VALIDATORS: " + result);
         return result;
     }
 
@@ -200,8 +199,6 @@ public final class Processor extends AbstractProcessor {
         String result = null;
         for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> e : mir.getElementValues().entrySet()) {
             if ("value()".equals(e.getKey().toString())) {
-                System.out.println("KEY: " + e.getKey() + " -- " + types(e.getKey()));
-                System.out.println("VAL = " + e.getValue().getValue() + " -- " + types(e.getValue().getValue()));
                 if (e.getValue().getValue() instanceof String) {
                     result = (String) e.getValue().getValue();
                     break;
@@ -221,12 +218,9 @@ public final class Processor extends AbstractProcessor {
                             AnnotationMirror param = (AnnotationMirror) o;
                             result.add(param);
                             findValidatorClassNames(param);
-                            System.out.println("ITEM: " + o + " -- " + types(o));
                         }
                     }
                 }
-//                System.out.println("VALUE: " + types(e.getValue().getValue()));
-//                System.out.println("FOUND " + e.getKey() + "       =    " + e.getValue() + " - " + types(e.getValue()));
             }
         }
         return result;
@@ -239,7 +233,6 @@ public final class Processor extends AbstractProcessor {
                 if (e.getValue().getValue() instanceof List) {
                     List<?> l = (List<?>) e.getValue().getValue();
                     for (Object o : l) {
-                        System.out.println("VALIDATOR: " + o + " -- " + types(o));
                         String s = o.toString();
                         if (s.endsWith(".class")) {
                             s = s.substring(0, s.length() - ".class".length());
@@ -250,24 +243,6 @@ public final class Processor extends AbstractProcessor {
             }
         }
         return result;
-    }
-
-    private static String types(Object o) { //debug stuff
-        List<String> s = new ArrayList<>();
-        Class<?> x = o.getClass();
-        while (x != Object.class) {
-            s.add(x.getName());
-            for (Class<?> c : x.getInterfaces()) {
-                s.add(c.getName());
-            }
-            x = x.getSuperclass();
-        }
-        StringBuilder sb = new StringBuilder();
-        for (String ss : s) {
-            sb.append(ss);
-            sb.append(", ");
-        }
-        return sb.toString();
     }
 
     static boolean isJavaIdentifier(String id) {
@@ -371,7 +346,6 @@ public final class Processor extends AbstractProcessor {
             srcClassName = className;
             this.packageName = pkg.getQualifiedName().toString();
             this.className = className.substring(className.lastIndexOf('.') + 1) + "Params";
-            //params.jsonConstructor(), params.allowUnlistedParameters(), params.generateValidationCode()
             this.jsonConstructor = params.jsonConstructor();
             this.anySetter = params.allowUnlistedParameters();
             this.validate = params.generateValidationCode();

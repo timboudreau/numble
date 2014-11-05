@@ -23,7 +23,7 @@
  */
 package com.mastfrog.parameters.validation;
 
-import com.mastfrog.giulius.Dependencies;
+import com.google.inject.Injector;
 import com.mastfrog.parameters.KeysValues;
 import com.mastfrog.parameters.Param;
 import com.mastfrog.parameters.Params;
@@ -47,19 +47,19 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
  */
 public class ParamChecker {
 
-    private final Dependencies dependencies;
+    private final Injector injector;
     private final ParamsWhitelist whitelist;
 
     /**
      * Create a new ParamChecker (you should ask for it to be injected).
      *
-     * @param dependencies A wrapper for the Guice Injector which will be used
+     * @param injector The Injector which will be used
      * to instantiate validators
      */
     @Inject
-    public ParamChecker(Dependencies dependencies) {
-        this.dependencies = dependencies;
-        whitelist = dependencies.getInstance(ParamsWhitelist.class);
+    public ParamChecker(Injector injector) {
+        this.injector = injector;
+        whitelist = injector.getInstance(ParamsWhitelist.class);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ParamChecker {
                 ps.add(v);
             }
             for (Class<? extends Validator<String>> validatorType : p.validators()) {
-                Validator<String> v = dependencies.getInstance(validatorType);
+                Validator<String> v = injector.getInstance(validatorType);
                 ps.add(v);
             }
         }
@@ -128,7 +128,7 @@ public class ParamChecker {
                     ps.add(v);
                 }
                 for (Class<? extends Validator<String>> validatorType : p.validators()) {
-                    Validator<String> v = dependencies.getInstance(validatorType);
+                    Validator<String> v = injector.getInstance(validatorType);
                     ps.add(v);
                 }
             }
