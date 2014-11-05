@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Parameters API</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Parameters API</h1>
+        <div>
+            <p>
+                This is a little library for managing parameters which come in the
+                form of an untyped map object, and turning them into typed objects
+                without hand-writing a lot of validation code.
+            </p>
+            <p>
+                It does two things:
+            </p>
+            <ol>
+                <li>Generates a Java class from the parameters you list, via an
+                    annotation processor, so you have type-safe access to your parameters</li>
+                <li>Provides a utility for validating the parameters before you
+                    instantiate one of those
+                </li>
+            </ol>
+            <p>
+                Using this library comes in a few steps:
+            </p>
+            <ul>
+                <li>Write a wrapper for <code><a href="KeysValues.html">KeysValues</a></code> that exposes the
+                    data you want to use at runtime.  Essentially it's a <code>Map&lt;String,String&gt;</code>
+                    minus the mutators.
+                <li>Annotate a type with &#064;Params</li>
+                <li>Declare some parameters as its value, with &#064;Param
+                    <ul>
+                        <li>Each param has a type</li>
+                        <li>Each param has a list of validators from the built-in
+                            <code>StringValidators</code> enum from the
+                            <a href="https://kenai.com/projects/simplevalidation">Simple Validation project></a>
+                        </li>
+                        <li>You can declare additional validators by type
+                            <ul>
+                                <li>These will be instantiated with Guice, so they can take
+                                    any injectable object in a constructor annotated with
+                                    &#064;Inject</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
