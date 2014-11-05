@@ -57,8 +57,7 @@ The generated class will be named `$NAME_OF_CLASS_WITH_THE_ANNOTATION + "Params"
 Validation
 ----------
 
-This project leverages a validation framework, [SimpleValidation](https://kenai.com/projects/simplevalidation)
-- [javadoc here](http://timboudreau.com/builds/job/SimpleValidation/lastSuccessfulBuild/artifact/ValidationAPI/target/apidocs/index.html)
+This project leverages a validation framework, [SimpleValidation](https://kenai.com/projects/simplevalidation) - ([javadoc here](http://timboudreau.com/builds/job/SimpleValidation/lastSuccessfulBuild/artifact/ValidationAPI/target/apidocs/index.html))
 to validate input data.  Each parameter has two values that can list validators
 (a validator simply takes some input and either passes it or adds a localized error
 message to a list of problems):
