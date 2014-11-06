@@ -87,6 +87,9 @@ public final class Processor extends AbstractProcessor {
         outer:
         for (Element e : all) {
             TypeElement te = (TypeElement) e;
+            if (te.getSimpleName().toString().endsWith("__GenPage")) {
+                continue;
+            }
             PackageElement pkg = findPackage(e);
             if (pkg == null) {
                 processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Params may not be used in the default package", e);

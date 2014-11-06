@@ -24,6 +24,8 @@
 package com.mastfrog.parameters;
 
 import com.google.common.base.Preconditions;
+import com.mastfrog.util.collections.CollectionUtils;
+import com.mastfrog.util.collections.Converter;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -41,9 +43,9 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
 
     public static final class MapAdapter implements KeysValues {
 
-        private final Map<String, String> map;
+        private final Map<String, ? extends Object> map;
 
-        public MapAdapter(Map<String, String> map) {
+        public MapAdapter(Map<String, ? extends Object> map) {
             Preconditions.checkNotNull(map);
             this.map = map;
         }
@@ -51,7 +53,14 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
         @Override
         public String get(String key) {
             Preconditions.checkNotNull(key);
-            return map.get(key);
+            Object result = map.get(key);
+            if (result instanceof String) {
+                return (String) result;
+            } else if (result != null) {
+                return result + "";
+            } else {
+                return null;
+            }
         }
 
         @Override
@@ -61,12 +70,53 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
 
         @Override
         public Iterator<Map.Entry<String, String>> iterator() {
-            return map.entrySet().iterator();
+            Converter<Map.Entry<String,String>, Map.Entry<String, ? extends Object>> c = new Conv();
+            Iterator<Map.Entry<String, ? extends Object>> it = (Iterator<Map.Entry<String, ? extends Object>>) map.entrySet().iterator();
+            return CollectionUtils.convertedIterator(c, it);
         }
 
         @Override
         public String toString() {
             return map.toString();
+        }
+        
+        private static class Conv implements Converter<Map.Entry<String,String>, Map.Entry<String, ? extends Object>> {
+
+            @Override
+            public Map.Entry<String, ? extends Object> unconvert(Map.Entry<String, String> r) {
+                return (Map.Entry) r;
+            }
+
+            @Override
+            public Map.Entry<String, String> convert(Map.Entry<String, ? extends Object> r) {
+                return new StringEntry(r);
+            }
+
+            private static class StringEntry implements Map.Entry<String,String> {
+                private final Map.Entry<String, ? extends Object> delegate;
+
+                public StringEntry(Map.Entry<String, ? extends Object> delegate) {
+                    this.delegate = delegate;
+                }
+
+                @Override
+                public String getKey() {
+                    return delegate.getKey();
+                }
+
+                @Override
+                public String getValue() {
+                    Object result = delegate.getValue();
+                    return result instanceof String ? (String) result : result + "";
+                }
+
+                @Override
+                public String setValue(String v) {
+                    throw new UnsupportedOperationException("Not supported.");
+                }
+                
+            }
+            
         }
     }
 }
