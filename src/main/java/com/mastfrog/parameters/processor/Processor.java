@@ -25,11 +25,9 @@ package com.mastfrog.parameters.processor;
 
 import com.mastfrog.parameters.Param;
 import com.mastfrog.parameters.Params;
-import com.google.common.base.Objects;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.AnnotationTypeMismatchException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,7 +71,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.Params")
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 @ServiceProvider(service = javax.annotation.processing.Processor.class)
 public final class Processor extends AbstractProcessor {
 
@@ -198,7 +196,7 @@ public final class Processor extends AbstractProcessor {
     private String findParamName(AnnotationMirror mir) {
         String result = null;
         for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> e : mir.getElementValues().entrySet()) {
-            if ("value()".equals(e.getKey().toString())) {
+            if (e.getKey().getSimpleName().contentEquals("value")) {
                 if (e.getValue().getValue() instanceof String) {
                     result = (String) e.getValue().getValue();
                     break;
@@ -239,6 +237,8 @@ public final class Processor extends AbstractProcessor {
                         }
                         result.add(s);
                     }
+                } else {
+                    result.add(e.getValue().getValue().toString());
                 }
             }
         }

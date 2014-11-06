@@ -100,6 +100,20 @@ So, generally, validate your data *before* instantiating your object, and that
 way you're guaranteed never to have an instance of one of your types that is
 not valid.
 
+Getting The Library
+-------------------
+
+To get it, add [the maven repository described here](http://timboudreau.com/builds) to your Maven
+project, and then add a dependency
+
+```xml
+<dependency>
+    <groupId>com.mastfrog</groupId>
+    <artifactId>numble</groupId>
+    <version>1.5.0</groupId>
+</dependency>
+```
+
 Generated Classes
 -----------------
 

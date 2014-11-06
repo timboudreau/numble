@@ -42,6 +42,7 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface Origin {
+    public static final String META_INF_PATH = "META-INF/http/numble.list";
     /**
      * The class, annotations on which were used to generate this class.  Since
      * validation information is retained at runtime, integrations may use this
