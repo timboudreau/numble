@@ -144,6 +144,7 @@ public class ParamCheckerTest {
     static class M extends AbstractModule {
 
         @Override
+        @SuppressWarnings("unchecked")
         protected void configure() {
             bind(ParamsWhitelist.class).toInstance(new ParamsWhitelist("cachebuster"));
             Map pp = new MapBuilder()

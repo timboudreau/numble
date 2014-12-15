@@ -69,6 +69,7 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public Iterator<Map.Entry<String, String>> iterator() {
             Converter<Map.Entry<String,String>, Map.Entry<String, ? extends Object>> c = new Conv();
             Iterator<Map.Entry<String, ? extends Object>> it = (Iterator<Map.Entry<String, ? extends Object>>) map.entrySet().iterator();
@@ -83,8 +84,9 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
         private static class Conv implements Converter<Map.Entry<String,String>, Map.Entry<String, ? extends Object>> {
 
             @Override
+            @SuppressWarnings("unchecked")
             public Map.Entry<String, ? extends Object> unconvert(Map.Entry<String, String> r) {
-                return (Map.Entry) r;
+                return (Map.Entry<String, ? extends Object>) r;
             }
 
             @Override
