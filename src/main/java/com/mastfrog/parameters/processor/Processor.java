@@ -768,7 +768,7 @@ public final class Processor extends AbstractProcessor {
                                 break;
                             default:
                                 sb.append("Optional.ofNullable(params.get(").append(nameQuoted).append(") == null ? ").append(defVal).append(" : ")
-                                        .append(param.type().conversionMethod()).append("(").append("params.get(").append(nameQuoted).append("))");
+                                        .append(param.type().conversionMethod()).append("(").append("params.get(").append(nameQuoted).append(")))");
                         }
                     }
                     sb.append(";");
