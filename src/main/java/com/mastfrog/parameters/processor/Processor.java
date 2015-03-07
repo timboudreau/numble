@@ -71,7 +71,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.Params")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 @ServiceProvider(service = javax.annotation.processing.Processor.class)
 public final class Processor extends AbstractProcessor {
 
@@ -80,8 +80,25 @@ public final class Processor extends AbstractProcessor {
         return Collections.singleton("com.mastfrog.parameters.Params");
     }
 
+    private String optionalType = "java.util.Optional";
+    private String fromNullable = "ofNullable";
+
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment re) {
+
+        SourceVersion sv = processingEnv.getSourceVersion();
+        if (sv.ordinal() > SourceVersion.RELEASE_7.ordinal()) {
+            optionalType = "java.util.Optional";
+        } else {
+            TypeElement el = processingEnv.getElementUtils().getTypeElement(optionalType);
+            if (el == null) {
+                optionalType = "com.mastfrog.util.Optional";
+            } else {
+                optionalType = "com.google.common.base.Optional";
+                fromNullable = "fromNullable";
+            }
+        }
+
         Set<? extends Element> all = re.getElementsAnnotatedWith(Params.class);
         List<GeneratedParamsClass> interfaces = new LinkedList<>();
         outer:
@@ -424,7 +441,7 @@ public final class Processor extends AbstractProcessor {
                 }
                 imports.add("java.util.Objects");
                 if (needOptional()) {
-                    imports.add("java.util.Optional");
+                    imports.add(optionalType);
                 }
                 imports.add("javax.inject.Inject");
                 Collections.sort(imports);
@@ -525,7 +542,7 @@ public final class Processor extends AbstractProcessor {
                         if (defVal != null) {
                             indent("this." + m.fieldName() + " = " + m.fieldName() + " == null ? " + defVal + " : " + m.fieldName() + ";", sb, 2);
                         } else if (!m.param.required()) {
-                            indent("this." + m.fieldName() + " = Optional.ofNullable(" + m.fieldName() + ");", sb, 2);
+                            indent("this." + m.fieldName() + " = Optional." + fromNullable + "(" + m.fieldName() + ");", sb, 2);
                         } else {
                             indent("this." + m.fieldName() + " = " + m.fieldName() + ";", sb, 2);
                         }
@@ -543,7 +560,7 @@ public final class Processor extends AbstractProcessor {
                     indent("}", sb, 1);
                     sb.append("\n");
                     indent("public Optional<String> get(String key) {", sb, 1);
-                    indent("return Optional.ofNullable(__metadata.get(key));", sb, 2);
+                    indent("return Optional." + fromNullable + "(__metadata.get(key));", sb, 2);
                     indent("}", sb, 1);
                     sb.append("\n");
                 }
@@ -763,11 +780,11 @@ public final class Processor extends AbstractProcessor {
                         switch (param.type()) {
                             case STRING:
                             case NON_EMPTY_STRING:
-                                sb.append("Optional.ofNullable(params.get(").append(nameQuoted).append(") == null ? " + defVal
+                                sb.append("Optional." + fromNullable + "(params.get(").append(nameQuoted).append(") == null ? " + defVal
                                         + " : params.get(").append(nameQuoted).append("))");
                                 break;
                             default:
-                                sb.append("Optional.ofNullable(params.get(").append(nameQuoted).append(") == null ? ").append(defVal).append(" : ")
+                                sb.append("Optional." + fromNullable + "(params.get(").append(nameQuoted).append(") == null ? ").append(defVal).append(" : ")
                                         .append(param.type().conversionMethod()).append("(").append("params.get(").append(nameQuoted).append(")))");
                         }
                     }
