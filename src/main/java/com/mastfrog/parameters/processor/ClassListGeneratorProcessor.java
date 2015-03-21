@@ -24,23 +24,18 @@
 package com.mastfrog.parameters.processor;
 
 import com.mastfrog.giulius.annotations.processors.IndexGeneratingProcessor;
-import com.mastfrog.parameters.Params;
 import com.mastfrog.parameters.gen.Origin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.AnnotationMirror;
-import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -49,7 +44,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.gen.Origin")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 @ServiceProvider(service = javax.annotation.processing.Processor.class)
 public class ClassListGeneratorProcessor extends IndexGeneratingProcessor {
 

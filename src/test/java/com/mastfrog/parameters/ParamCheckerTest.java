@@ -156,7 +156,7 @@ public class ParamCheckerTest {
                     .put("requiredNumber", "7.52306")
                     .build();
 
-            Adap adap = new Adap(pp);
+            Adap adap = new Adap((Map<String,String>)pp);
             bind(KeysValues.class).toInstance(adap);
             bind(Adap.class).toInstance(adap);
         }
