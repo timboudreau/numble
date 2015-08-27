@@ -632,7 +632,7 @@ public final class Processor extends AbstractProcessor {
                                 indent("if (" + p.fieldName() + ".isPresent()) {", sb, 2);
                             }
                             for (StringValidators v : p.param.constraints()) {
-                                indent(v.name() + ".validate(problems, \"" + p.param.value() + "\", " + p.fieldName() + ");", sb, ind);
+                                indent(v.name() + ".validate(problems, \"" + p.param.value() + "\", " + p.fieldName() + (optional ? ".get()" : "") + ");", sb, optional ? ind + 1 : ind);
                             }
                             if (optional) {
                                 indent("}", sb, 2);
