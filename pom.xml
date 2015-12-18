@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mastfrog</groupId>
@@ -7,31 +8,21 @@
         <version>1.6.4</version>
         <relativePath/>
     </parent>
-    <groupId>com.mastfrog</groupId>
     <artifactId>numble</artifactId>
-    <packaging>jar</packaging>
     <name>Numble (Parameter Annotations)</name>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.kenai</groupId>
             <artifactId>simplevalidation</artifactId>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
             <scope>compile</scope>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.mastfrog</groupId>
@@ -47,7 +38,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <scope>test</scope>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -58,7 +48,6 @@
             <groupId>com.mastfrog</groupId>
             <artifactId>giulius</artifactId>
             <scope>compile</scope>
-            <type>jar</type>
         </dependency>
     </dependencies>
     <repositories>
