@@ -28,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastfrog.parameters.ParamCheckerTest.M;
 import com.google.inject.AbstractModule;
 import com.mastfrog.giulius.Dependencies;
-import com.mastfrog.parameters.KeysValues;
 import com.mastfrog.parameters.validation.ParamChecker;
 import com.mastfrog.parameters.validation.ParamsWhitelist;
 import com.mastfrog.giulius.tests.GuiceRunner;
