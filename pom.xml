@@ -10,9 +10,16 @@
     <artifactId>numble</artifactId>
     <name>Numble (Parameter Annotations)</name>
     <dependencies>
+        <!--
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
+        </dependency>
+                -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kenai</groupId>
@@ -42,6 +49,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>util</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
