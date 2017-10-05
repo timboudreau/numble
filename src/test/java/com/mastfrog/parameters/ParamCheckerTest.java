@@ -76,43 +76,36 @@ public class ParamCheckerTest {
         pp.set("requiredInt", "3.725");
         checker.check(FakePage.class, pp, problems);
         assertFalse(problems + "", !problems.hasFatal());
-        System.out.println("PROBLS " + problems);
         problems = new Problems();
 
         pp.set("requiredInt", "37");
         pp.set("requiredBool", "hello");
         checker.check(FakePage.class, pp, problems);
-        System.out.println("PROBLS " + problems);
         assertFalse(problems + "", !problems.hasFatal());
         pp.set("requiredBool", "false");
         problems = new Problems();
 
         pp.set("requiredNonNeg", "-2307");
         checker.check(FakePage.class, pp, problems);
-        System.out.println("PROBLS " + problems);
         assertFalse(problems + "", !problems.hasFatal());
         problems = new Problems();
 
         pp.set("requiredNonNeg", "abcd");
         checker.check(FakePage.class, pp, problems);
-        System.out.println("PROBLS " + problems);
         assertFalse(problems + "", !problems.hasFatal());
         problems = new Problems();
 
         pp.set("requiredNonNeg", "6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666");
         checker.check(FakePage.class, pp, problems);
-        System.out.println("PROBLS " + problems);
         assertFalse(problems + "", !problems.hasFatal());
         problems = new Problems();
 
         pp.set("requiredNonNeg", "32");
         checker.check(FakePage.class, pp, problems);
-        System.out.println("PROBLS " + problems);
         assertTrue(problems + "", !problems.hasFatal());
 
         pp.set("fuzzbar", "a32");
         checker.check(FakePage.class, pp, problems);
-        System.out.println("PROBLS " + problems);
         assertFalse(problems + "", !problems.hasFatal());
         pp.remove("fuzzbar");
 
@@ -132,7 +125,6 @@ public class ParamCheckerTest {
         
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(params.toMap());
-        System.out.println("JSON: " + json);
         com.mastfrog.parameters.FakePageParams reconstituted = mapper.readValue(json, com.mastfrog.parameters.FakePageParams.class);
         assertEquals(params, reconstituted);
         
