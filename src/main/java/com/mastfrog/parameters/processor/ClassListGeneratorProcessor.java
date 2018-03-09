@@ -23,8 +23,9 @@
  */
 package com.mastfrog.parameters.processor;
 
-import com.mastfrog.giulius.annotations.processors.IndexGeneratingProcessor;
+import com.mastfrog.util.service.IndexGeneratingProcessor;
 import com.mastfrog.parameters.gen.Origin;
+import com.mastfrog.util.service.ServiceProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +38,6 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
@@ -45,7 +45,7 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.gen.Origin")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@ServiceProvider(service = javax.annotation.processing.Processor.class)
+@ServiceProvider(javax.annotation.processing.Processor.class)
 public class ClassListGeneratorProcessor extends IndexGeneratingProcessor {
 
     @Override

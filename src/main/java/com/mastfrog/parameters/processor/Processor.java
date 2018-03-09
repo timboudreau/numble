@@ -25,6 +25,7 @@ package com.mastfrog.parameters.processor;
 
 import com.mastfrog.parameters.Param;
 import com.mastfrog.parameters.Params;
+import com.mastfrog.util.service.ServiceProvider;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.AnnotationTypeMismatchException;
@@ -63,7 +64,6 @@ import javax.tools.JavaFileObject;
 import javax.tools.StandardLocation;
 import org.netbeans.validation.api.Problems;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Annotation processor which generates typesafe classes for parameters
@@ -72,7 +72,7 @@ import org.openide.util.lookup.ServiceProvider;
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.Params")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
-@ServiceProvider(service = javax.annotation.processing.Processor.class)
+@ServiceProvider(javax.annotation.processing.Processor.class)
 public final class Processor extends AbstractProcessor {
 
     @Override
