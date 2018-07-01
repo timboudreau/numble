@@ -23,12 +23,12 @@
  */
 package com.mastfrog.parameters.processor;
 
-import com.mastfrog.util.service.IndexGeneratingProcessor;
 import com.mastfrog.parameters.gen.Origin;
+import com.mastfrog.util.service.AnnotationIndexFactory;
+import com.mastfrog.util.service.IndexGeneratingProcessor;
+import com.mastfrog.util.service.Line;
 import com.mastfrog.util.service.ServiceProvider;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -46,7 +46,13 @@ import javax.lang.model.type.TypeMirror;
 @SupportedAnnotationTypes("com.mastfrog.parameters.gen.Origin")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @ServiceProvider(javax.annotation.processing.Processor.class)
-public class ClassListGeneratorProcessor extends IndexGeneratingProcessor {
+public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> {
+
+    private int ix = 0;
+
+    public ClassListGeneratorProcessor() {
+        super(AnnotationIndexFactory.lines());
+    }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -60,7 +66,7 @@ public class ClassListGeneratorProcessor extends IndexGeneratingProcessor {
             if (mirror != null) {
                 TypeElement te = (TypeElement) e;
                 String name = te.getQualifiedName().toString();
-                super.addLine(Origin.META_INF_PATH, name, e);
+                super.addIndexElement(Origin.META_INF_PATH, new Line(ix++, new Element[]{e}, name));
             }
         }
         return true;
@@ -75,23 +81,4 @@ public class ClassListGeneratorProcessor extends IndexGeneratingProcessor {
         }
         return null;
     }
-
-    private static String types(Object o) { //debug stuff
-        List<String> s = new ArrayList<>();
-        Class<?> x = o.getClass();
-        while (x != Object.class) {
-            s.add(x.getName());
-            for (Class<?> c : x.getInterfaces()) {
-                s.add(c.getName());
-            }
-            x = x.getSuperclass();
-        }
-        StringBuilder sb = new StringBuilder();
-        for (String ss : s) {
-            sb.append(ss);
-            sb.append(", ");
-        }
-        return sb.toString();
-    }
-
 }

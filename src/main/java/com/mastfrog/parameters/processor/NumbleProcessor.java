@@ -71,63 +71,58 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.Params")
-@SupportedSourceVersion(SourceVersion.RELEASE_7)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 @ServiceProvider(javax.annotation.processing.Processor.class)
-public final class Processor extends AbstractProcessor {
-
-    @Override
-    public Set<String> getSupportedAnnotationTypes() {
-        return Collections.singleton("com.mastfrog.parameters.Params");
-    }
+public final class NumbleProcessor extends AbstractProcessor {
 
     private String optionalType = "java.util.Optional";
     private String fromNullable = "ofNullable";
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment re) {
-
-        SourceVersion sv = processingEnv.getSourceVersion();
-        if (sv.ordinal() > SourceVersion.RELEASE_7.ordinal()) {
-            optionalType = "java.util.Optional";
-        } else {
-            TypeElement el = processingEnv.getElementUtils().getTypeElement(optionalType);
-            if (el == null) {
-                optionalType = "com.mastfrog.util.Optional";
+        try {
+            SourceVersion sv = processingEnv.getSourceVersion();
+            if (sv.ordinal() > SourceVersion.RELEASE_7.ordinal()) {
+                optionalType = "java.util.Optional";
             } else {
-                optionalType = "com.google.common.base.Optional";
-                fromNullable = "fromNullable";
+                TypeElement el = processingEnv.getElementUtils().getTypeElement(optionalType);
+                if (el == null) {
+                    optionalType = "com.mastfrog.util.Optional";
+                } else {
+                    optionalType = "com.google.common.base.Optional";
+                    fromNullable = "fromNullable";
+                }
             }
-        }
 
-        Set<? extends Element> all = re.getElementsAnnotatedWith(Params.class);
-        List<GeneratedParamsClass> interfaces = new LinkedList<>();
-        outer:
-        for (Element e : all) {
-            TypeElement te = (TypeElement) e;
-            if (te.getSimpleName().toString().endsWith("__GenPage")) {
-                continue;
-            }
-            PackageElement pkg = findPackage(e);
-            if (pkg == null) {
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Params may not be used in the default package", e);
-                continue;
-            }
-            if (!isPageSubtype(te)) {
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Params must be used on a subclass of org.apache.wicket.Page", e);
-                continue;
-            }
-            String className = te.getQualifiedName().toString();
-            Params params = te.getAnnotation(Params.class);
+            Set<? extends Element> all = re.getElementsAnnotatedWith(Params.class);
+            List<GeneratedParamsClass> interfaces = new LinkedList<>();
+            outer:
+            for (Element e : all) {
+                TypeElement te = (TypeElement) e;
+                if (te.getSimpleName().toString().endsWith("__GenPage")) {
+                    continue;
+                }
+                PackageElement pkg = findPackage(e);
+                if (pkg == null) {
+                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Params may not be used in the default package", e);
+                    continue;
+                }
+                if (!isPageSubtype(te)) {
+                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Params must be used on a subclass of org.apache.wicket.Page", e);
+                    continue;
+                }
+                String className = te.getQualifiedName().toString();
+                Params params = te.getAnnotation(Params.class);
 
-            Map<String, List<String>> validators = validatorsForParam(e);
-            GeneratedParamsClass inf = new GeneratedParamsClass(className, te, pkg, params, validators);
+                Map<String, List<String>> validators = validatorsForParam(e);
+                GeneratedParamsClass inf = new GeneratedParamsClass(className, te, pkg, params, validators);
 
-            if (!params.useRequestBody()) {
-                checkConstructor(te, inf);
-            }
-            interfaces.add(inf);
-            Set<String> names = new HashSet<>();
-            for (Param param : params.value()) {
+                if (!params.useRequestBody()) {
+                    checkConstructor(te, inf);
+                }
+                interfaces.add(inf);
+                Set<String> names = new HashSet<>();
+                for (Param param : params.value()) {
 //                if (param.required() && !param.defaultValue().isEmpty()) {
 //                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Don't set required to "
 //                            + "true if you are providing a default value - required makes it an error not "
@@ -135,54 +130,58 @@ public final class Processor extends AbstractProcessor {
 //                            + "because it will always have a value.", e);
 //                    continue outer;
 //                }
-                if (param.value().trim().isEmpty()) {
-                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Empty parameter name", e);
-                    continue outer;
-                }
-                if (!isJavaIdentifier(param.value())) {
-                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Not a valid Java identifier: " + param.value(), e);
-                    continue outer;
-                }
-                if (!names.add(param.value())) {
-                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Duplicate parameter name '" + param.value() + "'", e);
-                    continue outer;
-                }
-                for (char c : ";,./*!@&^/\\<>?'\"[]{}-=+)(".toCharArray()) {
-                    if (param.value().contains("" + c)) {
-                        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Param name may not contain the character '" + c + "'", e);
+                    if (param.value().trim().isEmpty()) {
+                        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Empty parameter name", e);
+                        continue outer;
                     }
+                    if (!isJavaIdentifier(param.value())) {
+                        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Not a valid Java identifier: " + param.value(), e);
+                        continue outer;
+                    }
+                    if (!names.add(param.value())) {
+                        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Duplicate parameter name '" + param.value() + "'", e);
+                        continue outer;
+                    }
+                    for (char c : ";,./*!@&^/\\<>?'\"[]{}-=+)(".toCharArray()) {
+                        if (param.value().contains("" + c)) {
+                            processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Param name may not contain the character '" + c + "'", e);
+                        }
+                    }
+                    inf.add(param);
                 }
-                inf.add(param);
             }
-        }
-        Filer filer = processingEnv.getFiler();
-        StringBuilder listBuilder = new StringBuilder();
-        for (GeneratedParamsClass inf : interfaces) {
-            try {
-                String pth = inf.packageAsPath() + '/' + inf.className;
-                pth = pth.replace('/', '.');
-                JavaFileObject obj = filer.createSourceFile(pth, inf.el);
-                try (OutputStream out = obj.openOutputStream()) {
-                    out.write(inf.toString().getBytes("UTF-8"));
+            Filer filer = processingEnv.getFiler();
+            StringBuilder listBuilder = new StringBuilder();
+            for (GeneratedParamsClass inf : interfaces) {
+                try {
+                    String pth = inf.packageAsPath() + '/' + inf.className;
+                    pth = pth.replace('/', '.');
+                    JavaFileObject obj = filer.createSourceFile(pth, inf.el);
+                    try (OutputStream out = obj.openOutputStream()) {
+                        out.write(inf.toString().getBytes("UTF-8"));
+                    }
+                    listBuilder.append(inf.className).append('\n');
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Error processing annotation: " + ex.getMessage(), inf.el);
+                    Logger.getLogger(NumbleProcessor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                listBuilder.append(inf.className).append('\n');
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Error processing annotation: " + ex.getMessage(), inf.el);
-                Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        if (re.processingOver()) {
-            try {
-                FileObject list = filer.createResource(StandardLocation.CLASS_OUTPUT, "", "META-INF/paramanos/bind.list", all.toArray(new Element[0]));
-                try (OutputStream out = list.openOutputStream()) {
-                    out.write(listBuilder.toString().getBytes("UTF-8"));
+            if (re.processingOver()) {
+                try {
+                    FileObject list = filer.createResource(StandardLocation.CLASS_OUTPUT, "", "META-INF/paramanos/bind.list", all.toArray(new Element[0]));
+                    try (OutputStream out = list.openOutputStream()) {
+                        out.write(listBuilder.toString().getBytes("UTF-8"));
+                    }
+                } catch (FilerException ex) {
+                    Logger.getLogger(NumbleProcessor.class.getName()).log(Level.INFO, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(NumbleProcessor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (FilerException ex) {
-                Logger.getLogger(Processor.class.getName()).log(Level.INFO, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (Throwable ex) {
+            ex.printStackTrace(System.err);
+            processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Error processing annotation " + ex.getMessage(), set.iterator().next());
         }
         return true;
     }

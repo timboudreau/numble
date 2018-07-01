@@ -3,19 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mastfrog</groupId>
-        <artifactId>mastfrog-parent</artifactId>
-        <version>2.4.1</version>
+        <artifactId>mastfrog-parent-indexed</artifactId>
+        <version>2.5.0-dev</version>
         <relativePath/>
     </parent>
     <artifactId>numble</artifactId>
     <name>Numble (Parameter Annotations)</name>
     <dependencies>
-        <!--
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>annotation-processors</artifactId>
         </dependency>
-                -->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
@@ -89,4 +87,70 @@
             <url>https://timboudreau.com</url>
         </developer>
     </developers>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+                <executions>
+<!--                    <execution>
+                        <id>process-annotations</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-proc:only</arg>
+                                <arg>-processor</arg>
+                                <arg>com.mastfrog.util.service.ServiceProviderAnnotationProcessor</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>-->
+                    <execution>
+                        <id>process-test-annotations</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-proc:only</arg>
+                                <arg>-processor</arg>
+                                <arg>com.mastfrog.parameters.processor.ClassListGeneratorProcessor,com.mastfrog.parameters.processor.NumbleProcessor</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArgs>
+                                <!--<arg>-proc:none</arg>-->
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-compile-tests</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-proc:none</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
