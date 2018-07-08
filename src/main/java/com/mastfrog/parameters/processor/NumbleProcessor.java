@@ -25,6 +25,7 @@ package com.mastfrog.parameters.processor;
 
 import com.mastfrog.parameters.Param;
 import com.mastfrog.parameters.Params;
+import com.mastfrog.parameters.TypeValidation;
 import com.mastfrog.util.service.ServiceProvider;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -77,6 +78,7 @@ public final class NumbleProcessor extends AbstractProcessor {
 
     private String optionalType = "java.util.Optional";
     private String fromNullable = "ofNullable";
+    private static final char[] ILLEGAL_CHARS = ";,./*!@&^/\\<>?'\"[]{}-=+)(".toCharArray();
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment re) {
@@ -142,8 +144,8 @@ public final class NumbleProcessor extends AbstractProcessor {
                         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Duplicate parameter name '" + param.value() + "'", e);
                         continue outer;
                     }
-                    for (char c : ";,./*!@&^/\\<>?'\"[]{}-=+)(".toCharArray()) {
-                        if (param.value().contains("" + c)) {
+                    for (char c : ILLEGAL_CHARS) {
+                        if (param.value().indexOf(c) >= 0) {
                             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Param name may not contain the character '" + c + "'", e);
                         }
                     }
@@ -747,7 +749,7 @@ public final class NumbleProcessor extends AbstractProcessor {
                                 break;
                         }
                         Problems problems = new Problems();
-                        param.type().validator().validate(problems, param.value(), defVal);
+                        TypeValidation.validator(param.type()).validate(problems, param.value(), defVal);
                         if (problems.hasFatal()) {
                             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Bad default value for "
                                     + param.value() + ":" + problems.getLeadProblem(), el);

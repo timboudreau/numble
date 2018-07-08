@@ -24,7 +24,6 @@
 package com.mastfrog.parameters;
 
 import static com.mastfrog.parameters.Types.STRING;
-import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

@@ -24,6 +24,7 @@
 package com.mastfrog.parameters.processor;
 
 import com.mastfrog.parameters.gen.Origin;
+import static com.mastfrog.parameters.processor.ClassListGeneratorProcessor.ORIGIN_ANNOTATION;
 import com.mastfrog.util.service.AnnotationIndexFactory;
 import com.mastfrog.util.service.IndexGeneratingProcessor;
 import com.mastfrog.util.service.Line;
@@ -37,18 +38,18 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeMirror;
 
 /**
  *
  * @author Tim Boudreau
  */
-@SupportedAnnotationTypes("com.mastfrog.parameters.gen.Origin")
+@SupportedAnnotationTypes(ORIGIN_ANNOTATION)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @ServiceProvider(javax.annotation.processing.Processor.class)
 public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> {
 
     private int ix = 0;
+    static final String ORIGIN_ANNOTATION = "com.mastfrog.parameters.gen.Origin";
 
     public ClassListGeneratorProcessor() {
         super(AnnotationIndexFactory.lines());
@@ -56,13 +57,14 @@ public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> 
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Collections.singleton("com.mastfrog.parameters.gen.Origin");
+        return Collections.singleton(ORIGIN_ANNOTATION);
     }
 
     @Override
     protected boolean handleProcess(Set<? extends TypeElement> annotations, RoundEnvironment re) {
-        for (Element e : re.getElementsAnnotatedWith(Origin.class)) {
-            AnnotationMirror mirror = findMirror(e);
+        Set<Element> els = utils.findAnnotatedElements(re, ORIGIN_ANNOTATION);
+        for (Element e : els) {
+            AnnotationMirror mirror = utils.findAnnotationMirror(e, ORIGIN_ANNOTATION);
             if (mirror != null) {
                 TypeElement te = (TypeElement) e;
                 String name = te.getQualifiedName().toString();
@@ -70,15 +72,5 @@ public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> 
             }
         }
         return true;
-    }
-
-    private AnnotationMirror findMirror(Element el) {
-        for (AnnotationMirror mir : el.getAnnotationMirrors()) {
-            TypeMirror type = mir.getAnnotationType().asElement().asType();
-            if (Origin.class.getName().equals(type.toString())) {
-                return mir;
-            }
-        }
-        return null;
     }
 }

@@ -24,6 +24,7 @@
 package com.mastfrog.parameters;
 
 import com.google.common.base.Preconditions;
+import static com.mastfrog.util.Checks.notNull;
 import com.mastfrog.util.collections.CollectionUtils;
 import com.mastfrog.util.collections.Converter;
 import java.util.Iterator;
@@ -40,6 +41,10 @@ public interface KeysValues extends Iterable<Map.Entry<String, String>> {
     String get(String key);
 
     Set<String> keySet();
+
+    public static KeysValues ofMap(Map<String,? extends Object> map) {
+        return new MapAdapter(notNull("map", map));
+    }
 
     public static final class MapAdapter implements KeysValues {
 

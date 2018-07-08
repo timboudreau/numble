@@ -27,6 +27,7 @@ import com.google.inject.Injector;
 import com.mastfrog.parameters.KeysValues;
 import com.mastfrog.parameters.Param;
 import com.mastfrog.parameters.Params;
+import com.mastfrog.parameters.TypeValidation;
 import com.mastfrog.parameters.Types;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -99,7 +100,7 @@ public class ParamChecker {
                 setForKey.put(p.value(), ps);
             }
             if (p.type() != Types.STRING) {
-                ps.add(p.type().validator());
+                ps.add(TypeValidation.validator(p.type()));
             }
             for (StringValidators v : p.constraints()) {
                 ps.add(v);
@@ -122,7 +123,7 @@ public class ParamChecker {
                     setForKey.put(p.value(), ps);
                 }
                 if (p.type() != Types.STRING) {
-                    ps.add(p.type().validator());
+                    ps.add(TypeValidation.validator(p.type()));
                 }
                 for (StringValidators v : p.constraints()) {
                     ps.add(v);
