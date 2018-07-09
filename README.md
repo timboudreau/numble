@@ -65,7 +65,7 @@ The generated class will be named `$NAME_OF_CLASS_WITH_THE_ANNOTATION + "Params"
 Validation
 ----------
 
-This project leverages a validation framework, [SimpleValidation](https://kenai.com/projects/simplevalidation) - ([javadoc here](http://timboudreau.com/builds/job/SimpleValidation/lastSuccessfulBuild/artifact/ValidationAPI/target/apidocs/index.html))
+This project leverages a validation framework, [SimpleValidation](https://github.com/timboudreau/simplevalidation) (formerly https://kenai.com/projects/simplevalidation) - ([javadoc here](http://timboudreau.com/builds/job/SimpleValidation/lastSuccessfulBuild/artifact/ValidationAPI/target/apidocs/index.html))
 to validate input data.  Each parameter has two values that can list validators
 (a validator simply takes some input and either passes it or adds a localized error
 message to a list of problems):
@@ -100,6 +100,19 @@ So, generally, validate your data *before* instantiating your object, and that
 way you're guaranteed never to have an instance of one of your types that is
 not valid.
 
+Integration with Acteur
+-----------------------
+
+To use Numble with [Acteur](https://github.com/timboudreau/acteur), install the companion Guice module
+`ActeurNumbleModule`; then simply use Numble to create classes, and use them in, for example,
+the `@InjectRequestBodyAs` annotation on your HTTP endpoints.  Validation failures will generate
+`400 Bad Request` responses with the validation errors included in the JSON body of the response,
+e.g.
+
+```json
+ {"error":"Invalid data","problems":["Port must be less than 65536","INVALID_PORT"]}
+```
+
 Getting The Library
 -------------------
 
@@ -110,7 +123,7 @@ project, and then add a dependency
 <dependency>
     <groupId>com.mastfrog</groupId>
     <artifactId>numble</groupId>
-    <version>1.5.0</groupId>
+    <version>2.5.0-dev</groupId>
 </dependency>
 ```
 
@@ -333,3 +346,4 @@ public final class FakePageParams implements Serializable, Validatable {
     }
 }
 ```
+

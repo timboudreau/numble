@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 Tim Boudreau.
+ * Copyright 2017 Tim Boudreau.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,33 +22,35 @@
  * THE SOFTWARE.
  */
 
-package com.mastfrog.parameters.gen;
+package com.mastfrog.numble.acteur;
 
-import static java.lang.annotation.ElementType.TYPE;
-import java.lang.annotation.Retention;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import java.lang.annotation.Target;
+import com.google.inject.Binder;
+import com.google.inject.Module;
+import com.mastfrog.acteur.Event;
+import com.mastfrog.acteur.RequestLogger;
+import com.mastfrog.acteur.util.RequestID;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
 /**
- * Annotation applied to generated classes as a pointer back to the type
- * that declared the annotations that generated it.
- * <p/>
- * You don't need to apply this to your own classes - it will be attached
- * to your generated classes.  It is used internally by the framework to
- * locate the original annotations for runtime processing.
+ * Quiets down the logger for tests.
  *
  * @author Tim Boudreau
  */
-@Retention(RUNTIME)
-@Target(TYPE)
-public @interface Origin {
-    public static final String META_INF_PATH = "META-INF/http/numble.list";
-    /**
-     * The class, annotations on which were used to generate this class.  Since
-     * validation information is retained at runtime, integrations may use this
-     * to look up enough information to validate the data before constructing
-     * an object.
-     * @return The type
-     */
-    Class<?> value();
+public class SilentRequestLogger implements RequestLogger, Module {
+
+    @Override
+    public void onBeforeEvent(RequestID rid, Event<?> event) {
+        // do nothing
+    }
+
+    @Override
+    public void onRespond(RequestID rid, Event<?> event, HttpResponseStatus status) {
+        // do nothing
+    }
+
+    @Override
+    public void configure(Binder binder) {
+        binder.bind(RequestLogger.class).toInstance(this);
+    }
+
 }

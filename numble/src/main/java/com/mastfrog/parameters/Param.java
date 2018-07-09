@@ -64,14 +64,15 @@ public @interface Param {
     Class<? extends Validator<String>>[] validators() default {};
 
     /**
-     * Another array of validators - built in ones from <a href="https://kenai.com/projects/simplevalidation>SimpleValidation</a>
+     * Another array of validators - built in ones from <a href="https://github.com/timboudreau/simplevalidation>SimpleValidation</a>
+     * (formerly hosted on kenai.com).
      * @return An array of enum constants that implement Validator
      */
     StringValidators[] constraints() default {};
 
     /**
      * If true, it is considered an error condition for this parameter to be
-     * missing
+     * missing.
      *
      * @return
      */
