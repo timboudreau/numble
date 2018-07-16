@@ -76,6 +76,11 @@
                         </annotationProcessorPath>
                         <annotationProcessorPath>
                             <groupId>${project.groupId}</groupId>
+                            <artifactId>util-fileformat</artifactId>
+                            <version>${mastfrog.version}</version>
+                        </annotationProcessorPath>
+                        <annotationProcessorPath>
+                            <groupId>${project.groupId}</groupId>
                             <artifactId>acteur-annotation-processors</artifactId>
                             <version>${mastfrog.version}</version>
                         </annotationProcessorPath>
