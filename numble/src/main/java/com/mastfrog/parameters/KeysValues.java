@@ -24,7 +24,7 @@
 package com.mastfrog.parameters;
 
 import com.google.common.base.Preconditions;
-import static com.mastfrog.util.Checks.notNull;
+import static com.mastfrog.util.preconditions.Checks.notNull;
 import com.mastfrog.util.collections.CollectionUtils;
 import com.mastfrog.util.collections.Converter;
 import java.util.Iterator;

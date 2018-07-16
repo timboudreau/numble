@@ -32,7 +32,7 @@ import com.mastfrog.parameters.validation.ParamChecker;
 import com.mastfrog.parameters.validation.ParamsWhitelist;
 import com.mastfrog.giulius.tests.GuiceRunner;
 import com.mastfrog.giulius.tests.TestWith;
-import com.mastfrog.util.Checks;
+import com.mastfrog.util.preconditions.Checks;
 import com.mastfrog.util.collections.MapBuilder;
 import java.io.IOException;
 import java.util.Iterator;
