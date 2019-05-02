@@ -25,9 +25,9 @@ package com.mastfrog.parameters.processor;
 
 import com.mastfrog.parameters.gen.Origin;
 import static com.mastfrog.parameters.processor.ClassListGeneratorProcessor.ORIGIN_ANNOTATION;
-import com.mastfrog.util.service.AnnotationIndexFactory;
-import com.mastfrog.util.service.IndexGeneratingProcessor;
-import com.mastfrog.util.service.Line;
+import com.mastfrog.annotation.registries.AnnotationIndexFactory;
+import com.mastfrog.annotation.registries.IndexGeneratingProcessor;
+import com.mastfrog.annotation.registries.Line;
 import com.mastfrog.util.service.ServiceProvider;
 import java.util.Collections;
 import java.util.Set;
