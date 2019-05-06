@@ -105,7 +105,7 @@
                             <version>${mastfrog.version}</version>
                         </annotationProcessorPath>
                         <annotationProcessorPath>
-                            <groupId>com.kenai</groupId>
+                            <groupId>com.mastfrog</groupId>
                             <artifactId>simplevalidation</artifactId>                            
                             <version>${simplevalidation.version}</version>
                         </annotationProcessorPath>

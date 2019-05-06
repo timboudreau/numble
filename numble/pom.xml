@@ -29,7 +29,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.kenai</groupId>
+            <groupId>com.mastfrog</groupId>
             <artifactId>simplevalidation</artifactId>
         </dependency>
         <dependency>
