@@ -72,7 +72,10 @@
             </snapshots>
         </repository>
     </repositories>
-    <url>https://github.com/timboudreau/numble</url>
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/timboudreau/numble/issues</url>
+    </issueManagement>
     <scm>
         <url>https://github.com/timboudreau/numble</url>
         <connection>scm:git:https://github.com/timboudreau/numble.git</connection>
