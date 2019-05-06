@@ -8,28 +8,41 @@
         <relativePath/>
     </parent>    
     <artifactId>numble-acteur</artifactId>
-    <organization>
-        <name>Mastfrog Technologies</name>
-        <url>https://mastfrog.com</url>
-    </organization>
+    <url>https://github.com/timboudreau/numble</url>
+    <scm>
+        <url>https://github.com/timboudreau/numble.git</url>
+        <connection>scm:git:https://github.com/timboudreau/numble.git</connection>
+        <developerConnection>git@github.com/timboudreau/numble.git</developerConnection>
+    </scm>
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/timboudreau/numble/issues</url>
-    </issueManagement><dependencies>
+    </issueManagement>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses><organization>
+        <name>Mastfrog Technologies</name>
+        <url>https://mastfrog.com</url>
+    </organization>
+    <dependencies>
         <dependency>
-            <groupId>com.mastfrog</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>numble</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mastfrog</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>acteur</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mastfrog</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>util-misc</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mastfrog</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>giulius-tests</artifactId>
             <scope>test</scope>
         </dependency>
