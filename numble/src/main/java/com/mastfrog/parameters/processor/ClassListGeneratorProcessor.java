@@ -23,6 +23,7 @@
  */
 package com.mastfrog.parameters.processor;
 
+import com.mastfrog.annotation.AnnotationUtils;
 import com.mastfrog.parameters.gen.Origin;
 import static com.mastfrog.parameters.processor.ClassListGeneratorProcessor.ORIGIN_ANNOTATION;
 import com.mastfrog.annotation.registries.AnnotationIndexFactory;
@@ -61,7 +62,7 @@ public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> 
     }
 
     @Override
-    protected boolean handleProcess(Set<? extends TypeElement> annotations, RoundEnvironment re) {
+    protected boolean handleProcess(Set<? extends TypeElement> annotations, RoundEnvironment re, AnnotationUtils utils) {
         Set<Element> els = utils.findAnnotatedElements(re, ORIGIN_ANNOTATION);
         for (Element e : els) {
             AnnotationMirror mirror = utils.findAnnotationMirror(e, ORIGIN_ANNOTATION);
