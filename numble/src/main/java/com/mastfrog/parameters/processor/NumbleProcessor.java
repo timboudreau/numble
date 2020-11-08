@@ -449,6 +449,9 @@ public final class NumbleProcessor extends AbstractProcessor {
                 for (String s : imports) {
                     sb.append("import " + s + ";\n");
                 }
+                // XXX hotfix for JDK 15 javac, which does not include the FQN of
+                // enum constants in toString() on array parameters of annotations
+                sb.append("\nimport static com.mastfrog.parameters.Types.*;\n");
                 sb.append("/** \n    Generated from &#064;Param annotations on ").append(srcClassName).append("\n*/\n");
                 Collections.sort(methods);
                 sb.append("@Origin(").append(srcClassName).append(".class)\n");
