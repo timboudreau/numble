@@ -109,7 +109,7 @@
                         <annotationProcessorPath>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>acteur-annotation-processors</artifactId>
-                            <version>${mastfrog.version}</version>
+                            <version>2.7.1.1</version>
                         </annotationProcessorPath>
                         <annotationProcessorPath>
                             <groupId>com.mastfrog</groupId>
