@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.mastfrog</groupId>
         <artifactId>mastfrog-parent</artifactId>
-        <version>2.8.1</version>
+        <version>3.0.0-dev</version>
         <relativePath/>
     </parent>
     <artifactId>numble</artifactId>
@@ -63,15 +66,18 @@
         <system>Github</system>
         <url>https://github.com/timboudreau/numble/issues</url>
     </issueManagement>
+
     <scm>
         <url>https://github.com/timboudreau/numble.git</url>
         <connection>scm:git:https://github.com/timboudreau/numble.git</connection>
         <developerConnection>git@github.com/timboudreau/numble.git</developerConnection>
     </scm>
+
     <organization>
         <name>Mastfrog Technologies</name>
         <url>https://mastfrog.com</url>
     </organization>
+
     <licenses>
         <license>
             <name>MIT</name>
@@ -79,6 +85,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <name>Tim Boudreau</name>
@@ -86,6 +93,7 @@
             <url>https://timboudreau.com</url>
         </developer>
     </developers>
+
     <build>
         <plugins>
             <plugin>
@@ -95,7 +103,7 @@
                     <fork>true</fork>
                 </configuration>
                 <executions>
-                    <!--                    <execution>
+                    <!--                     <execution>
                         <id>process-annotations</id>
                         <phase>generate-sources</phase>
                         <goals>
@@ -108,7 +116,7 @@
                                 <arg>com.mastfrog.util.service.ServiceProviderAnnotationProcessor</arg>
                             </compilerArgs>
                         </configuration>
-                    </execution>-->
+                    </execution> -->
                     <execution>
                         <id>process-test-annotations</id>
                         <phase>generate-test-sources</phase>
@@ -131,7 +139,7 @@
                         </goals>
                         <configuration>
                             <compilerArgs>
-                                <!--<arg>-proc:none</arg>-->
+                                <!-- <arg>-proc:none</arg> -->
                             </compilerArgs>
                         </configuration>
                     </execution>
