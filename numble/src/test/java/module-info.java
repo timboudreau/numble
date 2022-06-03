@@ -22,6 +22,9 @@ open module com.mastfrog.numble {
 
     // Sibling com.mastfrog/giulius-3.0.0-dev:compile
     requires com.mastfrog.giulius;
+    requires com.mastfrog.giulius.tests;
+    
+    requires com.fasterxml.jackson.databind;
 
     // Inferred from source scan
     requires com.mastfrog.preconditions;
@@ -30,6 +33,9 @@ open module com.mastfrog.numble {
 
     // derived from javax.inject/javax.inject-1:compile in javax/inject/javax.inject/1/javax.inject-1.pom
     requires javax.inject;
+
+    // Inferred from test-source-scan
+    requires junit;
 
     // derived from com.mastfrog/simplevalidation-0.0.0-? in com/mastfrog/simplevalidation/1.14/simplevalidation-1.14.pom
     requires simplevalidation;

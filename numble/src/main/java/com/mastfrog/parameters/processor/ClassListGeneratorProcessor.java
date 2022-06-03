@@ -24,7 +24,7 @@
 package com.mastfrog.parameters.processor;
 
 import com.mastfrog.annotation.AnnotationUtils;
-import com.mastfrog.parameters.gen.Origin;
+import com.mastfrog.acteur.annotations.Origin;
 import static com.mastfrog.parameters.processor.ClassListGeneratorProcessor.ORIGIN_ANNOTATION;
 import com.mastfrog.annotation.registries.AnnotationIndexFactory;
 import com.mastfrog.annotation.registries.IndexGeneratingProcessor;
@@ -45,12 +45,12 @@ import javax.lang.model.element.TypeElement;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes(ORIGIN_ANNOTATION)
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_16)
 @ServiceProvider(javax.annotation.processing.Processor.class)
 public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> {
 
     private int ix = 0;
-    static final String ORIGIN_ANNOTATION = "com.mastfrog.parameters.gen.Origin";
+    static final String ORIGIN_ANNOTATION = "com.mastfrog.acteur.annotations.Origin";
 
     public ClassListGeneratorProcessor() {
         super(AnnotationIndexFactory.lines());

@@ -24,4 +24,10 @@ open module com.mastfrog.numble.acteur {
     // Transitive detected by source scan
     requires com.mastfrog.streams;
 
+    // Inferred from source scan
+    requires com.mastfrog.strings;
+
+    // Inferred from test-source-scan
+    requires transitive junit;
+
 }
