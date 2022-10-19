@@ -1,7 +1,6 @@
 package com.mastfrog.numble.acteur;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.net.MediaType;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
@@ -14,6 +13,7 @@ import com.mastfrog.acteur.server.ServerBuilder;
 import com.mastfrog.giulius.Dependencies;
 import com.mastfrog.giulius.tests.GuiceRunner;
 import com.mastfrog.giulius.tests.TestWith;
+import com.mastfrog.mime.MimeType;
 import com.mastfrog.netty.http.client.HttpClient;
 import com.mastfrog.netty.http.test.harness.TestHarness;
 import com.mastfrog.netty.http.test.harness.TestHarness.CallResult;
@@ -75,13 +75,13 @@ public class GenericApplicationTest {
                 .put("port", 8080).put("bool", false).build();
 
         CallResult res = harn.put("/numble").setTimeout(Duration.ofSeconds(20))
-                .setBody(m, MediaType.JSON_UTF_8).go().await().assertCode(200);
+                .setBody(m, MimeType.JSON_UTF_8).go().await().assertCode(200);
         Map<String, Object> nue = res.content(Map.class);
         assertEquals(m, nue);
 
         m = map("host").to("!!::~oh-no").map("port").to(80396).map("bool").finallyTo(true);
         String err = harn.put("/numble").setTimeout(Duration.ofSeconds(20))
-                .setBody(m, MediaType.JSON_UTF_8).go().await().assertStatus(BAD_REQUEST)
+                .setBody(m, MimeType.JSON_UTF_8).go().await().assertStatus(BAD_REQUEST)
                 .content();
         System.out.println("\n\nERR: " + err + "\n\n");
     }

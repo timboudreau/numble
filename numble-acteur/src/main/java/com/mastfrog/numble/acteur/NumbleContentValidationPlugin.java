@@ -23,8 +23,8 @@
  */
 package com.mastfrog.numble.acteur;
 
-import com.google.common.net.MediaType;
 import com.mastfrog.acteur.ContentConverter;
+import com.mastfrog.mime.MimeType;
 import com.mastfrog.parameters.KeysValues;
 import com.mastfrog.parameters.gen.Origin;
 import com.mastfrog.parameters.validation.ParamChecker;
@@ -92,7 +92,7 @@ final class NumbleContentValidationPlugin extends ContentConverter.ContentValida
     }
 
     @Override
-    protected <T> void validate(ByteBuf buf, MediaType mimeType, Class<T> type, Codec codec) throws Exception {
+    protected <T> void validate(ByteBuf buf, MimeType mimeType, Class<T> type, Codec codec) throws Exception {
         Origin origin = type.getAnnotation(Origin.class);
         if (origin != null) {
             StringObjectMap map;
