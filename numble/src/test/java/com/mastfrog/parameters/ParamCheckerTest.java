@@ -31,7 +31,7 @@ import com.mastfrog.giulius.Dependencies;
 import com.mastfrog.parameters.validation.ParamChecker;
 import com.mastfrog.parameters.validation.ParamsWhitelist;
 import com.mastfrog.giulius.tests.GuiceRunner;
-import com.mastfrog.giulius.tests.TestWith;
+import com.mastfrog.giulius.tests.anno.TestWith;
 import com.mastfrog.util.preconditions.Checks;
 import com.mastfrog.util.collections.MapBuilder;
 import java.io.IOException;
