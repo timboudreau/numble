@@ -72,7 +72,7 @@ import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes("com.mastfrog.parameters.Params")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_17)
 @ServiceProvider(javax.annotation.processing.Processor.class)
 public final class NumbleProcessor extends AbstractProcessor {
 

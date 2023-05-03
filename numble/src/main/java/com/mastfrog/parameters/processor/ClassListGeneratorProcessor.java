@@ -45,7 +45,7 @@ import javax.lang.model.element.TypeElement;
  * @author Tim Boudreau
  */
 @SupportedAnnotationTypes(ORIGIN_ANNOTATION)
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_17)
 @ServiceProvider(javax.annotation.processing.Processor.class)
 public class ClassListGeneratorProcessor extends IndexGeneratingProcessor<Line> {
 
